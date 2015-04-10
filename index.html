@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jasny Bootstrap - File input Xtra</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Bootstrap -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.css" rel="stylesheet" media="screen">
+        
+        <link href="css/fileinput.css" rel="stylesheet" media="screen">
+    </head>
+    <body style="padding: 30px 0">
+        <div class="container">
+            <div class="jumbotron">
+                <h1>File input Xtra</h1>
+                <p>Jasny Bootstrap File input with drag&amp;drop and cropping.</p>
+            </div>
+
+            <div class="text-center">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-crop fileinput-drop thumbnail fileinput-preview" style="width: 280px; height: 280px;"></div>
+                    <input type="range" min="0" max="100" class="fileinput-scale fileinput-exists">
+                    <div>
+                        <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/draggabilly/1.2.0/draggabilly.pkgd.min.js"></script>
+        
+        <!-- Use custom fileinput plugin -->
+        <script src="js/fileinput.js"></script>
+    </body>
+</html>

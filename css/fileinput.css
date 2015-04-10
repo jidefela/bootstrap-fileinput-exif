@@ -1,0 +1,46 @@
+.fileinput-hover {
+    border-color:  #ccc;
+    border-color: rgba(82,168,236,.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: 0 0 8px rgba(82,168,236,.6);
+    box-shadow: 0 0 8px rgba(82,168,236,.6);
+}
+
+.fileinput-crop {
+    overflow: hidden;
+    position: relative;
+}
+.fileinput-exists .fileinput-crop {
+    cursor: move;
+}
+
+.fileinput-crop:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 0 0 0 40px white,inset 0 0 0 41px rgba(0,0,0,.1),inset 0 0 20px 41px rgba(0,0,0,.2);
+    opacity: 0.8;
+}
+.fileinput-new .fileinput-crop:after {
+    display: none;
+}
+
+.fileinput-crop.thumbnail {
+    padding: 0;
+    text-align: left;
+}
+
+.fileinput-crop.thumbnail > img {
+    max-height: none;
+    max-width: none;
+    margin: 0;
+}
+
+.fileinput-scale {
+    margin-bottom: 10px;
+}
