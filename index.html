@@ -19,11 +19,15 @@
 
             <div class="text-center">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="fileinput-crop fileinput-drop thumbnail fileinput-preview" style="width: 280px; height: 280px;"></div>
+                    <div class="fileinput-crop fileinput-drop thumbnail fileinput-preview" style="width: 282px; height: 282px;"></div>
                     <input type="range" min="0" max="100" class="fileinput-scale fileinput-exists">
-                    <div>
+                    <div class="upload-hidden">
                         <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
                         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                        <button type="button" class="btn btn-primary fileinput-exists upload" data-url="api/upload.php">Upload</button>
+                    </div>
+                    <div class="upload-message" style="display: none">
+                        Uploading...
                     </div>
                 </div>
             </div>
@@ -36,5 +40,6 @@
         
         <!-- Use custom fileinput plugin -->
         <script src="js/fileinput.js"></script>
+        <script src="js/upload.js"></script>
     </body>
 </html>

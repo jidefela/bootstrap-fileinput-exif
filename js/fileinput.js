@@ -49,6 +49,8 @@
       hiddenVal: this.$hidden.val()
     }
     
+    this.file = null
+    
     this.listen()
   }
   
@@ -59,9 +61,10 @@
     this.$element.find('[data-trigger="fileinput"]').on('click.bs.fileinput', $.proxy(this.trigger, this))
     this.$element.find('[data-dismiss="fileinput"]').on('click.bs.fileinput', $.proxy(this.clear, this))
     
-    this.$element.find('.fileinput-drop').on('dragover.bs.fileinput', $.proxy(this.dragover, this))
-    this.$element.find('.fileinput-drop').on('dragleave.bs.fileinput', $.proxy(this.dragover, this))
+    this.$element.find('.fileinput-drop').on('dragover.bs.fileinput', $.proxy(this.dragOver, this))
+    this.$element.find('.fileinput-drop').on('dragleave.bs.fileinput', $.proxy(this.dragOver, this))
     this.$element.find('.fileinput-drop').on('drop.bs.fileinput', $.proxy(this.drop, this))
+    this.$element.find('.fileinput-drop').on('dragMove.bs.fileinput', $.proxy(this.dragMove, this))
     
     this.$element.find('.fileinput-scale').on('input.bs.fileinput', $.proxy(this.scale, this))
   },
@@ -83,11 +86,13 @@
     this.$input.attr('name', this.name)
 
     var file = files[0]
+    this.file = file
 
     if (this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match(/^image\/(gif|png|jpeg)$/) : file.name.match(/\.(gif|png|jpe?g)$/i)) && typeof FileReader !== "undefined") {
       var reader = new FileReader()
       var preview = this.$preview
       var element = this.$element
+      var setPosition = $.proxy(this.setPosition, this)
 
       reader.onload = function(re) {
         var $img = $('<img>')
@@ -120,25 +125,29 @@
           }
 
           // Draggable
-          $img.draggabilly();
+          $img.draggabilly()
 
           // The Draggable API doesn't support a handle outside of the element, though it works fine so just hacking it in.
           var draggability = $img.data('draggabilly');
           draggability.handles = preview;
           draggability.bindHandles();
           
+          //draggability.position =
+          
           // Center image
           $img.css('top', (preview.height() - $img.height()) / 2)
           $img.css('left', (preview.width() - $img.width()) / 2)
+          
+          setPosition()
         }
 
         element.trigger('change.bs.fileinput', files)
       }
 
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(this.file)
     } else {
-      this.$element.find('.fileinput-filename').text(file.name)
-      this.$preview.text(file.name)
+      this.$element.find('.fileinput-filename').text(this.file.name)
+      this.$preview.text(this.file.name)
       
       this.$element.addClass('fileinput-exists').removeClass('fileinput-new')
       
@@ -191,7 +200,7 @@
     e.preventDefault()
   }
 
-  Fileinput.prototype.dragover = function(e) {
+  Fileinput.prototype.dragOver = function(e) {
     var action = e.type == "dragover" ? 'addClass' : 'removeClass'
     $(e.currentTarget)[action]('fileinput-hover')
     
@@ -207,9 +216,42 @@
     this.change(e)
   }
 
+  Fileinput.prototype.dragMove = function(e) {
+    var draggie = $(e.target).data('draggabilly')
+    var previewBox = this.$preview[0].getBoundingClientRect()
+    var imgBox = this.$preview.find('img')[0].getBoundingClientRect()
+    
+    if (imgBox.left > previewBox.left + 40) draggie.position.x = 40
+    if (imgBox.right < previewBox.right - 42) draggie.position.x = previewBox.width - imgBox.width - 42
+    
+    if (imgBox.top > previewBox.top + 40) draggie.position.y = 40
+    if (imgBox.bottom < previewBox.bottom - 42) draggie.position.y = previewBox.height - imgBox.height - 42
+    
+    this.setPosition(draggie.position)
+  }
+
   Fileinput.prototype.scale = function(e) {
     var width = $(e.target).val()
     this.$preview.find('img').css('width', width + 'px')
+    
+    this.setPosition()
+  }
+
+  Fileinput.prototype.setPosition = function(position) {
+    var $img = this.$preview.find('img')
+    var width = $img.width()
+    
+    if (!position) position = {x: parseInt($img.css('left')), y: parseInt($img.css('top'))}
+    
+    this.position = {
+      x: -1 * (position.x - 40),
+      y: -1 * (position.y - 40),
+      height: this.$preview.height() - 80,
+      width: this.$preview.width() - 80,
+      scale: this.$element.find('.fileinput-scale').attr('max') / width
+    }
+    
+    console.log(this.position)
   }
   
   // FILEUPLOAD PLUGIN DEFINITION
