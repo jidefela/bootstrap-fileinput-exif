@@ -7,7 +7,7 @@ did some major tweaking.
 
 ###To install, run
 
- 	 `bower install bootstrap-fileinput`
+ 	 bower install bootstrap-fileinput
  
 
 
