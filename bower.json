@@ -1,0 +1,13 @@
+{
+  "name": "bootstrap-fileinput",
+  "version": "0.11.1",
+  "main": ["bootstrap-fileupload.js", "bootstrap.css"],
+  "dependencies": {
+    "jquery": ">=1.7",
+    "bootstrap": ">=2.3.1"
+  },
+  "devDependencies": {
+    "jquery": "~1.7",
+    "bootstrap": "~2.3.1"
+  }
+}
